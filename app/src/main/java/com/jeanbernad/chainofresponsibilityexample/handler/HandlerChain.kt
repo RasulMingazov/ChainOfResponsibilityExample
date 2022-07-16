@@ -5,13 +5,13 @@ class HandlerChain(
     private val next: Handler
 ) : Handler {
 
-    private var isActialCorrect = false
+    private var isActualCorrect = false
 
     override fun isCorrect(text: String): Boolean {
-        isActialCorrect = actual.isCorrect(text)
-        return if (isActialCorrect) next.isCorrect(text) else false
+        isActualCorrect = actual.isCorrect(text)
+        return if (isActualCorrect) next.isCorrect(text) else false
     }
 
     override fun errorMessage() =
-        if (isActialCorrect) next.errorMessage() else actual.errorMessage()
+        if (isActualCorrect) next.errorMessage() else actual.errorMessage()
 }
