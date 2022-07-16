@@ -1,11 +1,10 @@
-package com.jeanbernad.chainofresponsibilityexample.login
+package com.jeanbernad.chainofresponsibilityexample.signup
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jeanbernad.chainofresponsibilityexample.handler.*
 
-class SignUpViewModel() : ViewModel() {
+class SignUpViewModel : ViewModel() {
 
     private var isLoginSuccessful = false
     private var isPasswordSuccessful = false

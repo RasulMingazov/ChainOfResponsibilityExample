@@ -1,4 +1,4 @@
-package com.jeanbernad.chainofresponsibilityexample.login
+package com.jeanbernad.chainofresponsibilityexample.signup
 
 import android.os.Bundle
 import android.view.LayoutInflater
