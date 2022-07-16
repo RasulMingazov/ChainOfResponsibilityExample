@@ -1,0 +1,2 @@
+# ChainOfResponsibilityExample
+![](cor.gif)
