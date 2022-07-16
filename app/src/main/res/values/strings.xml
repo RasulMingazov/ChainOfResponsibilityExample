@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ChainOfResponsibilityExample</string>
+    <string name="login">Login</string>
+    <string name="authorization">Authorization</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign up</string>
+</resources>
