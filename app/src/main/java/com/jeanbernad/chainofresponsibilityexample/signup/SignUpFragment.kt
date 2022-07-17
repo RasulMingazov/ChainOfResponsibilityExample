@@ -43,11 +43,9 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         binding.signUpBtn.setOnClickListener {
             viewModel.check()
         }
-
         binding.signUpBtnKeyboard.setOnClickListener {
             viewModel.check()
         }
-
         viewModel.signUpState.observe(viewLifecycleOwner) {
             if (it) {
                 Toast.makeText(requireContext(), "Sign up successful", Toast.LENGTH_SHORT).show()
@@ -70,7 +68,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         binding.loginEt.doOnTextChanged { text, _, _, _ ->
             viewModel.checkLogin(text.toString().trim())
         }
-
         viewModel.loginState.observe(viewLifecycleOwner) {
             binding.login.error = it
         }
@@ -84,7 +81,6 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
             }
             viewModel.checkPassword(text.toString().trim())
         }
-
         viewModel.passwordState.observe(viewLifecycleOwner) {
             binding.password.error = it
             binding.confirmPassword.isEnabled = it == null
@@ -96,9 +92,13 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                 binding.passwordEt.text.toString()
             )
         }
-
         viewModel.confirmPasswordState.observe(viewLifecycleOwner) {
             binding.confirmPassword.error = it
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        unregistrar.unregister()
     }
 }
