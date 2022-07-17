@@ -1,2 +1,3 @@
 # ChainOfResponsibilityExample
-![](cor-auth.gif)
+![](cor-auth.gif =250x400))
+
