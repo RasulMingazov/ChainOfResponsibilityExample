@@ -11,11 +11,14 @@ import androidx.fragment.app.viewModels
 import com.jeanbernad.chainofresponsibilityexample.R
 import com.jeanbernad.chainofresponsibilityexample.autoCleared
 import com.jeanbernad.chainofresponsibilityexample.databinding.FragmentSignUpBinding
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
+import net.yslibrary.android.keyboardvisibilityevent.Unregistrar
 
 class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
     private var binding by autoCleared<FragmentSignUpBinding>()
     private val viewModel by viewModels<SignUpViewModel>()
+    private lateinit var unregistrar: Unregistrar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -27,7 +30,21 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        unregistrar = KeyboardVisibilityEvent.registerEventListener(requireActivity()) {
+            if (it) {
+                binding.signUpBtnKeyboard.visibility = View.VISIBLE
+                binding.signUpBtn.visibility = View.GONE
+            } else {
+                binding.signUpBtnKeyboard.visibility = View.GONE
+                binding.signUpBtn.visibility = View.VISIBLE
+            }
+        }
+
         binding.signUpBtn.setOnClickListener {
+            viewModel.check()
+        }
+
+        binding.signUpBtnKeyboard.setOnClickListener {
             viewModel.check()
         }
 
@@ -36,11 +53,17 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                 Toast.makeText(requireContext(), "Sign up successful", Toast.LENGTH_SHORT).show()
                 binding.loginEt.text = null
                 binding.passwordEt.text = null
+                binding.confirmPasswordEt.text = null
                 binding.login.error = null
                 binding.password.error = null
+                binding.confirmPassword.error = null
             } else {
                 viewModel.checkLogin(binding.loginEt.text.toString().trim())
                 viewModel.checkPassword(binding.passwordEt.text.toString().trim())
+                viewModel.checkConfirmPassword(
+                    binding.confirmPasswordEt.text.toString().trim(),
+                    binding.passwordEt.text.toString().trim()
+                )
             }
         }
 
@@ -53,11 +76,29 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
         }
 
         binding.passwordEt.doOnTextChanged { text, _, _, _ ->
+            if (binding.confirmPassword.isEnabled) {
+                viewModel.checkConfirmPassword(
+                    binding.confirmPasswordEt.text.toString(),
+                    text.toString()
+                )
+            }
             viewModel.checkPassword(text.toString().trim())
         }
 
         viewModel.passwordState.observe(viewLifecycleOwner) {
             binding.password.error = it
+            binding.confirmPassword.isEnabled = it == null
+        }
+
+        binding.confirmPasswordEt.doOnTextChanged { text, _, _, _ ->
+            viewModel.checkConfirmPassword(
+                text.toString().trim(),
+                binding.passwordEt.text.toString()
+            )
+        }
+
+        viewModel.confirmPasswordState.observe(viewLifecycleOwner) {
+            binding.confirmPassword.error = it
         }
     }
 }
