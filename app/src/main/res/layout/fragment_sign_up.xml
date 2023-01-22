@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_grey"
     android:fitsSystemWindows="true"
     android:windowSoftInputMode="adjustResize|stateHidden">
 
@@ -41,13 +42,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="32dp"
-            android:hint="@string/login">
+            android:layout_marginTop="12dp"
+            android:hint="@string/login"
+            app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textImeMultiLine"
                 android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -58,15 +61,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="24dp"
             android:hint="@string/password"
+            app:errorEnabled="true"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:inputType="textPassword|textImeMultiLine"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirm_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:enabled="false"
+            android:hint="@string/confirm_password"
+            app:errorEnabled="true"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirm_password_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:inputType="textPassword|textImeMultiLine"
                 android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -77,14 +101,31 @@
         android:id="@+id/sign_up_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom|center"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
         android:background="@color/button_color"
         android:text="@string/sign_up"
         app:cornerRadius="36dp"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/sign_up_btn_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
+            android:layout_marginVertical="10dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/sign_up"
+            android:textColor="@color/design_default_color_primary" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
