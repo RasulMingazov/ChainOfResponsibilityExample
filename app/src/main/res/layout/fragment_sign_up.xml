@@ -123,7 +123,7 @@
             android:layout_marginVertical="10dp"
             android:layout_marginEnd="24dp"
             android:text="@string/sign_up"
-            android:textColor="@color/design_default_color_primary" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

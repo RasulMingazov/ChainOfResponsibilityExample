@@ -5,17 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.jeanbernad.chainofresponsibilityexample.JeanTextWatcher
-import com.jeanbernad.chainofresponsibilityexample.R
-import com.jeanbernad.chainofresponsibilityexample.autoCleared
+import com.jeanbernad.chainofresponsibilityexample.*
 import com.jeanbernad.chainofresponsibilityexample.databinding.FragmentSignUpBinding
+import com.jeanbernad.chainofresponsibilityexample.keyboard.KeyboardState
 
-class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
+class SignUpFragment : Fragment(R.layout.fragment_sign_up), KeyboardState {
 
     private var binding by autoCleared<FragmentSignUpBinding>()
     private val viewModel by viewModels<SignUpViewModel>()
+    private val listenKeyboard = ListenKeyboard.Base(this)
+
 
     private val loginWatcher by lazy {
         object : JeanTextWatcher({ login -> viewModel.checkLogin(login) }) {}
@@ -34,6 +36,26 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     ): View {
         binding = FragmentSignUpBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun down() {
+        binding.signUpBtnKeyboard.isVisible = false
+        binding.signUpBtn.isVisible = true
+    }
+
+    override fun up() {
+        binding.signUpBtnKeyboard.isVisible = true
+            binding.signUpBtn.isVisible = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        listenKeyboard.init(requireActivity())
+    }
+
+    override fun onPause() {
+        super.onPause()
+        listenKeyboard.unregister()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
