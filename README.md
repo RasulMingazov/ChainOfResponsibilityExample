@@ -1,4 +1,4 @@
-# ChainOfResponsibilityExample
+# ChainOfResponsibility
 
 Implementation of the Chain of Responsibility Pattern
 
