@@ -1,17 +1,13 @@
 package com.jeanbernad.chainofresponsibilityexample
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.View
-import com.jeanbernad.chainofresponsibilityexample.login.SignUpFragment
+import com.jeanbernad.chainofresponsibilityexample.signup.SignUpFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportFragmentManager.beginTransaction().replace(android.R.id.content, SignUpFragment())
-            .commit()
+        supportFragmentManager.beginTransaction().replace(android.R.id.content, SignUpFragment()).commit()
     }
 }

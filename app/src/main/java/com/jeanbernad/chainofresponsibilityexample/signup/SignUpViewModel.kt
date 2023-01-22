@@ -1,6 +1,5 @@
-package com.jeanbernad.chainofresponsibilityexample.login
+package com.jeanbernad.chainofresponsibilityexample.signup
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jeanbernad.chainofresponsibilityexample.handler.*
@@ -13,6 +12,9 @@ class SignUpViewModel() : ViewModel() {
     val signUpState = MutableLiveData<Boolean>()
     val loginState = MutableLiveData<String?>()
     val passwordState = MutableLiveData<String?>()
+
+    private var actualLogin = ""
+    private var actualPassword = ""
 
     private val loginHandler by lazy {
         HandlerChain(
@@ -41,11 +43,17 @@ class SignUpViewModel() : ViewModel() {
     }
 
     fun check() {
-        signUpState.value = isLoginSuccessful && isPasswordSuccessful
+        if (isLoginSuccessful && isPasswordSuccessful) {
+            signUpState.value = true
+        } else {
+            checkLogin(actualLogin)
+            checkPassword(actualPassword)
+        }
     }
 
     fun checkLogin(login: String) {
-        if (!loginHandler.isCorrect(login)) {
+        actualLogin = login
+        if (!loginHandler.isCorrect(actualLogin)) {
             loginState.value = loginHandler.errorMessage()
             isLoginSuccessful = false
         } else {
@@ -55,13 +63,19 @@ class SignUpViewModel() : ViewModel() {
     }
 
     fun checkPassword(password: String) {
-        if (!passwordHandler.isCorrect(password)) {
+        actualPassword = password
+        if (!passwordHandler.isCorrect(actualPassword)) {
             passwordState.value = passwordHandler.errorMessage()
             isPasswordSuccessful = false
         } else {
             isPasswordSuccessful = true
             passwordState.value = null
         }
+    }
+
+    fun reset() {
+        actualLogin = ""
+        actualPassword = ""
     }
 
     companion object {
