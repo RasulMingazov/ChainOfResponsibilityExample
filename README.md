@@ -14,6 +14,6 @@ Implementation of the Chain of Responsibility Pattern
     <td>Example</td>   
   </tr>
   <tr>
-    <td><img src="chain.gif" alt="animated" width=292 height=634></td>
+    <td><img src="chain-responsibility.gif" alt="animated" width=292 height=634></td>
   </tr>
  </table>
