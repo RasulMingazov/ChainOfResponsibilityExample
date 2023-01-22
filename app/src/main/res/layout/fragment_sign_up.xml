@@ -80,7 +80,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:enabled="false"
             android:hint="@string/confirm_password"
             app:errorEnabled="true"
             app:passwordToggleEnabled="true">
@@ -89,7 +88,6 @@
                 android:id="@+id/confirm_password_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:inputType="textPassword|textImeMultiLine"
                 android:maxLines="1" />
 
